@@ -1,1 +1,9 @@
 *//create two vms ubuntu
+   create a RG
+   create a vnet
+   create a bastion
+   create a storage account
+   create a file share
+   copy the mount script
+*//mount a persistence azure fileshare
+*//
