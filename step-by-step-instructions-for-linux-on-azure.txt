@@ -1,11 +1,11 @@
 *//Step 1. create two vms ubuntu
    create a RG
    create a vnet
-      - Open the port for 9090
+      - Open the port for 9090(prometheus), 3000(grafana), 9115(blackbox_exporter)
    create a bastion
    create a storage account
    create a file share
-   copy the mount script
+   copy the mount script//*
 *//Step 2. Mount a persistence azure fileshare
 sudo apt-get install cifs-utils
 *//Step 3. To view the mount 
