@@ -1,4 +1,4 @@
-*//1. create two vms ubuntu
+*//Step 1. create two vms ubuntu
    create a RG
    create a vnet
       - Open the port for 9090
@@ -6,15 +6,15 @@
    create a storage account
    create a file share
    copy the mount script
-*//2. Mount a persistence azure fileshare
+*//Step 2. Mount a persistence azure fileshare
 sudo apt-get install cifs-utils
-*//3. To view the mount 
+*//Step 3. To view the mount 
 df -h
 cd /mnt
 ls -l
 cd fspoc
-*//4. download the prometheus in vm1 https://prometheus.io/download/
-*//download and unzip the prometheus-2.33.1.linux-amd64.tar.gz
+*//Step 4. download the prometheus in vm1 https://prometheus.io/download/
+*//download and unzip the prometheus-2.33.1.linux-amd64.tar.gz in the fileshae location
 wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 *//run and start the prometheus note:add & to run the script in the background
@@ -23,4 +23,8 @@ tar xvfz prometheus-*.tar.gz
 wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xvfz blackbox_exporter-*.tar.gz
 *//run the blackbox_exporter Note: add & to run the script in the background
+./blackbox_exporter&
+*//Step 5. on the VM2 run the blackbox_exporter Note from the fileshae location
+./blackbox_exporter&
+*//Step 6. download grafana https://grafana.com/docs/grafana/latest/installation/debian/, https://grafana.com/grafana/download
 ./blackbox_exporter&
