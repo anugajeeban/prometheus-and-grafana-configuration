@@ -31,3 +31,21 @@ Make sure it is added to VM1 to the file share location//*
 wget https://dl.grafana.com/enterprise/release/grafana-enterprise_8.3.5_amd64.deb
 sudo apt-get install -y adduser libfontconfig1
 sudo dpkg -i grafana-enterprise_8.3.5_amd64.deb
+sudo systemctl status grafana-server
+sudo systemctl enable grafana-server
+sudo systemctl start grafana-server
+*//Step 7. Open the port 3000 on VM and click on the https://localhost:3000
+admin admin is the user name change it after//*
+sudo vi /lib/systemd/system/grafana-server.service;
+sudo vi /etc/default/grafana-server
+sudo systemctl stop grafana-server
+sudo mkdir -p /prometheus/grafana/data
+sudo mkdir -p /prometheus/grafana/pulgins
+sudo chown -R grafana:grafana /prometheus/grafana
+sudo mv /etc/grafana/grafana.ini /prometheus/grafana
+
+
+
+
+
+
