@@ -27,4 +27,7 @@ tar xvfz blackbox_exporter-*.tar.gz
 *//Step 5. on the VM2 run the blackbox_exporter Note from the fileshae location
 ./blackbox_exporter&
 *//Step 6. download grafana https://grafana.com/docs/grafana/latest/installation/debian/, https://grafana.com/grafana/download
-./blackbox_exporter&
+Make sure it is added to VM1 to the file share location//*
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_8.3.5_amd64.deb
+sudo apt-get install -y adduser libfontconfig1
+sudo dpkg -i grafana-enterprise_8.3.5_amd64.deb
