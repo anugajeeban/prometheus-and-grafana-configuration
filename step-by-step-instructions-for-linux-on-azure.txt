@@ -103,6 +103,8 @@ export  PATH=$PATH:/usr/local/go/bin
 source ~/.profile
 *to find the location
 which go
+*in the bin folder of azure go/bin: create a azure.yml file https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/azure.yml
+*is the url http://localhost:9276/metrics
 
 
 
