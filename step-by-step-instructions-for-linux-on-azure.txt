@@ -2,6 +2,7 @@
    create a RG
    create a vnet
       - Open the port for 9090(prometheus), 3000(grafana), 9115(blackbox_exporter)
+   provision a vm-ubuntu
    create a bastion
    create a storage account
    create a file share
@@ -13,8 +14,32 @@ df -h
 cd /mnt
 ls -l
 cd fspoc
-*//Step 4. download the prometheus in vm1 https://prometheus.io/download/
-*//download and unzip the prometheus-2.33.1.linux-amd64.tar.gz in the fileshae location
+*//Step 4. Install Prometheus as a service https://blog.ruanbekker.com/blog/2019/05/07/setup-prometheus-and-node-exporter-on-ubuntu-for-epic-monitoring/
+*enable root user
+sudo passwd root
+*root user credentials should be stored in keyvault
+useradd --no-create-home --shell /bin/false prometheus
+mkdir /etc/prometheus
+mkdir /var/lib/prometheus
+chown prometheus:prometheus /etc/prometheus
+chown prometheus:prometheus /var/lib/prometheus
+apt update && apt upgrade -y
+*Go to your home
+wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz
+tar xvfz prometheus-*.tar.gz
+cp -r /home/pg-pocadmin/prometheus-2.33.1.linux-amd64 /home/pg-pocadmin/prometheus
+rm -r prometheus-2.33.1.linux-amd64
+rm -r prometheus-2.33.1.linux-amd64.tar.gz
+cp /home/pg-pocadmin/prometheus/prometheus /usr/local/bin/
+cp /home/pg-pocadmin/prometheus/promtool /usr/local/bin/
+chown prometheus:prometheus /usr/local/bin/prometheus
+chown prometheus:prometheus /usr/local/bin/promtool
+cp -r /home/pg-pocadmin/prometheus/consoles /etc/prometheus/
+cp -r /home/pg-pocadmin/prometheus/console_libraries /etc/prometheus/
+chown -R prometheus:prometheus /etc/prometheus/consoles
+chown -R prometheus:prometheus /etc/prometheus/console_libraries
+rm -rf /home/pg-pocadmin/prometheus*
+
 wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 *//run and start the prometheus note:add & to run the script in the background
