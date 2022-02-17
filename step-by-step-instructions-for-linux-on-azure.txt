@@ -83,18 +83,28 @@ sudo systemctl status grafana-server
 sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 
+*//Step 7. Azure Metrics Exporter 
+*install go
+sudo apt install golang-go
+mkdir -p ~/go_projects/{bin,src,pkg}
+cd ~/go_projects
+export  PATH=$PATH:/usr/local/go/bin
+export GOPATH="$HOME/go_projects"
+export GOBIN="$GOPATH/bin"
+export GOROOT=$HOME/go
+export PATH=$PATH:$GOROOT/bin
+source ~/.profile
+*move it to the location usr/local so that the we can run the go from anywhere
+sudo mv go /usr/local/
+*edit 
+vi ~/.bashrc
+*add go to the path go to the bottom
+export  PATH=$PATH:/usr/local/go/bin
+source ~/.profile
+*to find the location
+which go
 
 
-
-*//Step 7. Open the port 3000 on VM and click on the https://localhost:3000
-admin admin is the user name change it after//*
-sudo vi /lib/systemd/system/grafana-server.service;
-sudo vi /etc/default/grafana-server
-sudo systemctl stop grafana-server
-sudo mkdir -p /prometheus/grafana/data
-sudo mkdir -p /prometheus/grafana/pulgins
-sudo chown -R grafana:grafana /prometheus/grafana
-sudo mv /etc/grafana/grafana.ini /prometheus/grafana
 
 
 
