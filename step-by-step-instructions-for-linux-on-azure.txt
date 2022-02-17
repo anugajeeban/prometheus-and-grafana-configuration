@@ -39,11 +39,10 @@ cp -r /home/pg-pocadmin/prometheus/console_libraries /etc/prometheus/
 chown -R prometheus:prometheus /etc/prometheus/consoles
 chown -R prometheus:prometheus /etc/prometheus/console_libraries
 rm -rf /home/pg-pocadmin/prometheus*
+*confiqure Prometheus
 
-wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz
-tar xvfz prometheus-*.tar.gz
-*//run and start the prometheus note:add & to run the script in the background
-./prometheus --config.file=prometheus.yml&
+
+
 *//download and unzip the blackbox_exporter-0.19.0.linux-amd64.tar.gz
 wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xvfz blackbox_exporter-*.tar.gz
