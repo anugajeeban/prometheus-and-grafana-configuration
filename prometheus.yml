@@ -1,103 +1,58 @@
-# my global config
 global:
-  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-  # scrape_timeout is set to the global default (10s).
-
-# Alertmanager configuration
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-          # - alertmanager:9093
-
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-rule_files:
-  # - "first_rules.yml"
-  # - "second_rules.yml"
-
-# A scrape configuration containing exactly one endpoint to scrape:
-# Here it's Prometheus itself.
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 1m
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: "prometheus"
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-    static_configs:
-      - targets: ["localhost:9090"]
-
-  - job_name: 'blackbox'
-    metrics_path: /probe
-    params:
-      module: [http_2xx]  # Look for a HTTP 200 response.
-    static_configs:
-      - targets:
-        - http://jenkins.io    # Target to probe with http.
-        - https://prometheus.io   # Target to probe with https.
-        - http://www.google.com 
-        - http://bitbucket.org
-        - https://www.canadiantire.ca/
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: 20.63.44.52:9115  # The blackbox exporter's real hostname:port.
-
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'azure'
-  # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 15s
-    static_configs:
-    - targets: ['localhost:9276']
-
- #azure keyvault metrics
- - job_name: 'azure-metrics-keyvault'
-   scrape_interval: 15s
-   memeics_path: /probe/metrics/list
-   params:
-     name: ["azure_metric_keyvault"]
-     subscription:
-     - f37a81c9-8d21-4666-96e0-25e1895ebf1c
-     filter: ["resourceType eq 'Microsoft.KeyVault/vaults'"]
-     metric:
-     - Availability
-     - ServiceApiHit
-     - ServiceApiLatency
-     interval: ["PT15M"]
-     timespan: ["PT15M"]
-     aggregation:
-     - average
-     - total
-   static_configs:
-   - targets: ['localhost:9276']
-
- #azure virtualnetworkgateway metrics
- - job_name: azure-metrics-virtualNetworkGateways
-   scrape_interval: 1m
-   metrics_path: /probe/metrics/list
-   params:
-     name: ["my_own_metric_name"]
-     subscription:
-     - f37a81c9-8d21-4666-96e0-25e1895ebf1c
-     resourceType: ["Microsoft.Network/virtualNetworkGateways"]
-     metric:
-     - AverageBandwidth
-     - P2SBandwidth
-     - P2SConnectionCount
-     - TunnelAverageBandwidth
-     - TunnelEgressBytes
-     - TunnelIngressBytes
-     - TunnelEgressPackets
-     - TunnelIngressPackets
-     - TunnelEgressPacketDropTSMismatch
-     - TunnelIngressPacketDropTSMismatch
-     interval: ["PT5M"]
-     timespan: ["PT5M"]
-     aggregation:
-     - average
-     - total
-   static_configs:
-   - targets: ['localhost:9276']
+- job_name: prometheus
+  honor_timestamps: true
+  scrape_interval: 5s
+  scrape_timeout: 5s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - localhost:9090
+- job_name: blackbox
+  honor_timestamps: true
+  params:
+    module:
+    - http_2xx
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /probe
+  scheme: http
+  follow_redirects: true
+  relabel_configs:
+  - source_labels: [__address__]
+    separator: ;
+    regex: (.*)
+    target_label: __param_target
+    replacement: $1
+    action: replace
+  - source_labels: [__param_target]
+    separator: ;
+    regex: (.*)
+    target_label: instance
+    replacement: $1
+    action: replace
+  - separator: ;
+    regex: (.*)
+    target_label: __address__
+    replacement: localhost:9115
+    action: replace
+  static_configs:
+  - targets:
+    - https://sonarqube.org
+    - https://jenkins.io
+    - https://microsoft.com
+- job_name: Azure
+  honor_timestamps: true
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  static_configs:
+  - targets:
+    - localhost:9276
