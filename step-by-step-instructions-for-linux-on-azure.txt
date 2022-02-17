@@ -106,6 +106,9 @@ which go
 *in the bin folder of azure go/bin: create a azure.yml file https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/azure.yml
 *is the url http://localhost:9276/metrics
 
+*//Step 6: Configure Grafana dashboard
+*for simple table up or down dashboard import this to the grafana dashboard https://grafana.com/grafana/dashboards/13659
+
 
 
 
