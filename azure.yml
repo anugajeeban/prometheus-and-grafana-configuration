@@ -1,3 +1,4 @@
+#azure metrics exporter, for end points https://www.azurespeed.com/Information/AzureEnvironments
 active_directory_authority_url: "https://login.microsoftonline.com/"
 resource_manager_url: "https://management.azure.com/"
 credentials:
