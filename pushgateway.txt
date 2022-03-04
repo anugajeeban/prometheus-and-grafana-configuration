@@ -12,3 +12,5 @@ systemctl enable pushgateway
 systemctl daemon-reload
 systemctl start pushgateway
 systemctl status pushgateway
+
+
