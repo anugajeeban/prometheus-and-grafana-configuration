@@ -21,3 +21,18 @@ resource_groups:
       - name: "Disk Read Operations/Sec"
       - name: "Disk Write Operations/Sec"
       - name: "CPU Credits Remaining"
+resource_groups:
+  - resource_group: "rg-vng"
+    resource_types: 
+      - "Microsoft.Network/virtualNetworkGateways"
+    metrics:
+      - name: "AverageBandwidth"
+      - name: "P2SBandwidth"
+      - name: "P2SConnectionCount"
+      - name: "TunnelAverageBandwidth"
+      - name: "TunnelEgressBytes"
+      - name: "TunnelIngressBytes"
+      - name: "TunnelEgressPackets"
+      - name: "TunnelIngressPackets"
+      - name: "TunnelEgressPacketDropTSMismatch"
+      - name: "TunnelIngressPacketDropTSMismatch"
