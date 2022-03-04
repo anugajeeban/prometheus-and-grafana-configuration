@@ -63,7 +63,7 @@ scrape_configs:
   params:
     name: ["my_own_metric_name"]
     subscription:
-    - ''
+    - abcs
     filter: ["resourceType eq 'Microsoft.Network/virtualNetworkGateways'"]
     metric:
     - AverageBandwidth
