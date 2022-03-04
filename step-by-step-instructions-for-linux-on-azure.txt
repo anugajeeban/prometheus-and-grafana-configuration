@@ -106,8 +106,22 @@ which go
 *in the bin folder of azure go/bin: create a azure.yml file https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/azure.yml
 *is the url http://localhost:9276/metrics
 
-*//Step 6: Configure Grafana dashboard
+*//Step 8. Install Pushgateway as a service https://blog.ruanbekker.com/blog/2019/05/17/install-pushgateway-to-expose-metrics-to-prometheus/
+ wget https://github.com/prometheus/pushgateway/releases/download/v1.4.2/pushgateway-1.4.2.linux-amd64.tar.gz
+tar -xvf pushgateway-1.4.2.linux-amd64.tar.gz
+useradd --no-create-home --shell /bin/false pushgateway
+cp pushgateway-1.4.2.linux-amd64/pushgateway /usr/local/bin/pushgateway
+chown pushgateway:pushgateway /usr/local/bin/pushgateway
+vi /etc/systemd/system/pushgateway.service
+*//edit the service with the details https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/pushgateway.service//
+systemctl enable pushgateway
+systemctl daemon-reload
+systemctl start pushgateway
+systemctl status pushgateway
+
+*//Step 9: Configure Grafana dashboard
 *for simple table up or down dashboard import this to the grafana dashboard https://grafana.com/grafana/dashboards/13659
+
 
 
 
