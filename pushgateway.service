@@ -1,0 +1,16 @@
+*DEFINE SYSTEM UNIT FILE TO CONTROL THE DAEMON USING SYSTEMD https://www.shellhacks.com/systemd-service-file-example/
+
+[Unit]
+Description=Pushgateway
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=pushgateway
+Group=pushgateway
+Type=simple
+ExecStart=/usr/local/bin/pushgateway \
+    --web.listen-address=":9091" \
+
+[Install]
+WantedBy=multi-user.target
