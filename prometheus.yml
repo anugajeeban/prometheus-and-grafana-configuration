@@ -55,4 +55,39 @@ scrape_configs:
   follow_redirects: true
   static_configs:
   - targets:
+    - localhost:9276  
+#azure virtual network-gateway
+- job_name: azure-metrics-virtualNetworkGateways
+  scrape_interval: 15s
+  metrics_path: /probe/metrics/list
+  params:
+    name: ["my_own_metric_name"]
+    subscription:
+    - f37a81c9-8d21-4666-96e0-25e1895ebf1c
+    filter: ["resourceType eq 'Microsoft.Network/virtualNetworkGateways'"]
+    metric:
+    - AverageBandwidth
+    - P2SBandwidth
+    - P2SConnectionCount
+    - TunnelAverageBandwidth
+    - TunnelEgressBytes
+    - TunnelIngressBytes
+    - TunnelEgressPackets
+    - TunnelIngressPackets
+    - TunnelEgressPacketDropTSMismatch
+    - TunnelIngressPacketDropTSMismatch
+    interval: ["PT5M"]
+    timespan: ["PT5M"]
+    aggregation:
+    - average
+    - total
+  static_configs:
+  - targets:
     - localhost:9276
+#pushgateway configuration
+- job_name: 'pushgateway'
+  honor_labels: true
+  static_configs:
+  - targets:
+    - localhost:9091
+
