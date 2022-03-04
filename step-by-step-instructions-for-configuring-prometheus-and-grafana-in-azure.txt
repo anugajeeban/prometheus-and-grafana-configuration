@@ -18,16 +18,16 @@ ls -l
 cd fspoc
 
 *//Step 4. Install Prometheus as a service https://blog.ruanbekker.com/blog/2019/05/07/setup-prometheus-and-node-exporter-on-ubuntu-for-epic-monitoring/
-*enable root user
+*//enable root user if you are using ubuntu
 sudo passwd root
-*root user credentials should be stored in keyvault
+*//root user credentials should be stored in keyvault
 useradd --no-create-home --shell /bin/false prometheus
 mkdir /etc/prometheus
 mkdir /var/lib/prometheus
 chown prometheus:prometheus /etc/prometheus
 chown prometheus:prometheus /var/lib/prometheus
 apt update && apt upgrade -y
-*Go to your home
+*//Go to your home
 wget https://github.com/prometheus/prometheus/releases/download/v2.33.1/prometheus-2.33.1.linux-amd64.tar.gz
 tar xvfz prometheus-*.tar.gz
 cp -r /home/pg-pocadmin/prometheus-2.33.1.linux-amd64 /home/pg-pocadmin/prometheus
@@ -42,13 +42,13 @@ cp -r /home/pg-pocadmin/prometheus/console_libraries /etc/prometheus/
 chown -R prometheus:prometheus /etc/prometheus/consoles
 chown -R prometheus:prometheus /etc/prometheus/console_libraries
 rm -rf /home/pg-pocadmin/prometheus*
-*confiqure Prometheus https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/prometheus.yml
+*//confiqure Prometheus https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/prometheus.yml
 vim /etc/prometheus/prometheus.yml
-*Apply permission to the configured file
-$ chown prometheus:prometheus /etc/prometheus/prometheus.yml
-*Create Prometheus service https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox_exporter.service
+*//Apply permission to the configured file
+chown prometheus:prometheus /etc/prometheus/prometheus.yml
+*//Create Prometheus service https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox_exporter.service
 vim /etc/systemd/system/prometheus.service
-*RELOAD SYSTEMD DAEMON AND START SERVICE
+*//RELOAD SYSTEMD DAEMON AND START SERVICE
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
 sudo systemctl start prometheus
@@ -57,18 +57,18 @@ sudo journalctl -u prometheus
 
 *//Step 5: Install Blackbox Exporter https://blog.ruanbekker.com/blog/2019/05/17/install-blackbox-exporter-to-monitor-websites-with-prometheus/
 useradd --no-create-home --shell /bin/false blackbox_exporter
-*go to home
+*//go to home
 wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.19.0/blackbox_exporter-0.19.0.linux-amd64.tar.gz
 tar xvfz blackbox_exporter-*.tar.gz
 cp blackbox_exporter-0.19.0.linux-amd64/blackbox_exporter /usr/local/bin/blackbox_exporter
 chown blackbox_exporter:blackbox_exporter /usr/local/bin/blackbox_exporter
 rm -rf blackbox_exporter-0.19.0.linux-amd64*
-*go to root
+*//go to root
 mkdir /etc/blackbox_exporter
-*blackbox.yml https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox.yml
+*//blackbox.yml https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox.yml
 vim /etc/blackbox_exporter/blackbox.yml
 chown blackbox_exporter:blackbox_exporter /etc/blackbox_exporter/blackbox.yml
-*Create blackbox service https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox_exporter.service
+*//Create blackbox service https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/blackbox_exporter.service
 vim /etc/systemd/system/blackbox_exporter.service
 systemctl daemon-reload
 systemctl enable blackbox_exporter
@@ -84,7 +84,7 @@ sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 
 *//Step 7. Azure Metrics Exporter 
-*install go
+*//install go
 sudo apt install golang-go
 mkdir -p ~/go_projects/{bin,src,pkg}
 cd ~/go_projects
@@ -94,17 +94,17 @@ export GOBIN="$GOPATH/bin"
 export GOROOT=$HOME/go
 export PATH=$PATH:$GOROOT/bin
 source ~/.profile
-*move it to the location usr/local so that the we can run the go from anywhere
+*//move it to the location usr/local so that the we can run the go from anywhere
 sudo mv go /usr/local/
-*edit 
+*//edit 
 vi ~/.bashrc
-*add go to the path go to the bottom
+*//add go to the path go to the bottom
 export  PATH=$PATH:/usr/local/go/bin
 source ~/.profile
-*to find the location
+*//to find the location
 which go
-*in the bin folder of azure go/bin: create a azure.yml file https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/azure.yml
-*is the url http://localhost:9276/metrics
+*//in the bin folder of azure go/bin: create a azure.yml file https://github.com/anugajeeban/prometheus-and-grafana-configuration/blob/main/azure.yml
+*//url: http://localhost:9276/metrics
 
 *//Step 8. Install Pushgateway as a service https://blog.ruanbekker.com/blog/2019/05/17/install-pushgateway-to-expose-metrics-to-prometheus/
  wget https://github.com/prometheus/pushgateway/releases/download/v1.4.2/pushgateway-1.4.2.linux-amd64.tar.gz
